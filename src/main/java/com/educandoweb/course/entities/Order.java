@@ -39,6 +39,14 @@ public class Order implements Serializable {
 	@JoinColumn(name = "client_id")
 	private User client;
 	
+	public Double getTotal() {
+		Double sum = 0.0;
+		for (OrderItem item : items) {
+			sum += item.getSubTotal();
+		}
+		return sum;
+	}
+	
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
@@ -98,7 +106,7 @@ public class Order implements Serializable {
 	public Set<OrderItem> getItems() {
 		return items;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
